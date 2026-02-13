@@ -43,3 +43,7 @@ Extend enrichment to include more fields from Explorium.
 Improve frontend UX and UI, add filters, search, and sorting for companies.
 
 Add unit & integration tests for backend tasks and API endpoints.
+
+ 
+For Celery backgroun worker:
+python -m celery -A app.workers.celery_app:celery worker --loglevel=info --pool=solo (I had to use single thread becuase of Windows mismatch with celery)
