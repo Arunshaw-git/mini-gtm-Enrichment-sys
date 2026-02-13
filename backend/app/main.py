@@ -127,24 +127,3 @@ def get_company(company_id: UUID):
         "updated_at": getattr(company, "updated_at", None),
     }
 
-
-# Retry a failed task
-@app.post("/retry-task/{company_id}")
-def retry_task(company_id: UUID):
-    db = SessionLocal()
-    company = db.query(Company).filter(Company.id == company_id).first()
-    if not company:
-        db.close()
-        raise HTTPException(status_code=404, detail="Company not found")
-
-    if company.status != "failed":
-        db.close()
-        return {"message": "Company task not in failed state"}
-
-    company.status = "pending"
-    db.commit()
-    db.close()
-
-    enrich_company_task.delay(str(company.id))
-    return {"message": "Retry task submitted", "domain": company.domain}
-
