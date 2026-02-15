@@ -44,6 +44,11 @@ Improve frontend UX and UI, add filters, search, and sorting for companies.
 
 Add unit & integration tests for backend tasks and API endpoints.
 
- 
+ENV Config: 
+REDIS_URL=redis://localhost:6379/0
+DATABASE_URL=postgresql://postgres:0000@localhost:5432/<dbname>
+EXPLORIUM_API_KEY=<YOUR_EXPLORIUM_API_KEY>
+
+
 For Celery backgroun worker:
 python -m celery -A app.workers.celery_app:celery worker --loglevel=info --pool=solo (I had to use single thread becuase of Windows mismatch with celery)
